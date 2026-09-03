@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "dataVersion": "2026-08-19.1",
+  "dataVersion": "2026-09-03.4",
   "schoolYear": "2026-27",
   "timezone": "America/Chicago",
   "site": {
@@ -10,7 +10,7 @@
     "defaultColor": "#66151c",
     "contact": "Questions or corrections? Please contact Mr. Sidarous."
   },
-  "revisionNote": "Revised 2026/08/19 to add new SY27 dates.",
+  "revisionNote": "Revised 2026/09/03 for schema version 3.",
   "dayTypes": [
     {
       "label": "Gold 1–4 Day",
