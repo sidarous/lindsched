@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="The Lindblom daily schedule: today's schedule, the current class, time remaining, and what comes next.">
+  <meta name="theme-color" content="#66151c">
+  <title>Lindblom Current Schedule</title>
+  <style>
+    :root{color-scheme:light;--accent:#66151c;--ink:#251f20;--muted:#695f61;--paper:#fff;--wash:#f6f2ef;--line:#e4dad6}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--wash);background:color-mix(in srgb,var(--accent) 8%,var(--paper));color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+    main{width:min(100% - 1.5rem,58rem);margin:auto;padding:clamp(1.25rem,4vw,3rem) 0}
+    header{text-align:center;margin-bottom:1.25rem}
+    h1{font-size:clamp(1.7rem,6vw,3rem);line-height:1.08;margin:0 0 .45rem}
+    #day{color:var(--accent);font-size:clamp(1.15rem,4vw,1.7rem);font-weight:750}
+    #clock{color:var(--muted);font-size:.95rem;margin-top:.2rem}
+    .card{background:var(--paper);border:1px solid var(--line);border-radius:1rem;box-shadow:0 .3rem 1rem #3e1c1810;padding:clamp(1rem,4vw,1.5rem)}
+    .now{text-align:center}
+    .eyebrow{color:var(--muted);font-size:.78rem;font-weight:750;letter-spacing:.08em;text-transform:uppercase}
+    #current{font-size:clamp(1.8rem,8vw,3.8rem);line-height:1.08;font-weight:800;margin:.25rem 0}
+    #range{color:var(--muted)}
+    .meter{height:.8rem;background:#e8e2df;border-radius:99rem;overflow:hidden;margin:1.2rem 0 .75rem}
+    #bar{width:0;height:100%;background:var(--accent);border-radius:inherit;transition:width .5s linear}
+    .facts{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:1.2rem;text-align:left}
+    .fact{background:var(--wash);border-radius:.75rem;padding:.85rem 1rem;min-width:0}
+    .value{display:block;font-size:clamp(1.05rem,4vw,1.35rem);font-weight:750;overflow-wrap:anywhere;margin-top:.15rem}
+    .schedule{margin-top:1rem}
+    h2{font-size:1.2rem;margin:0 0 .75rem}
+    ol{list-style:none;padding:0;margin:0;display:grid;gap:.35rem}
+    li{display:grid;grid-template-columns:minmax(8.5rem,11rem) 1fr;gap:.7rem;padding:.6rem .7rem;border-radius:.55rem}
+    li:nth-child(odd){background:var(--wash)}
+    li.active{background:var(--accent);color:#fff;font-weight:750}
+    .time{font-variant-numeric:tabular-nums;color:var(--muted)}
+    li.active .time{color:inherit}
+    footer{text-align:center;color:var(--muted);font-size:.8rem;margin-top:1rem}
+    @media(max-width:32rem){.facts{grid-template-columns:1fr}li{grid-template-columns:1fr;gap:0}.time{font-size:.82rem}}
+    @media(prefers-reduced-motion:reduce){#bar{transition:none}}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Lindblom Current Schedule</h1>
+    <div id="day">Loading today’s schedule…</div>
+    <div id="clock"></div>
+  </header>
+
+  <section class="card now" aria-live="polite">
+    <div class="eyebrow" id="status">Right now</div>
+    <div id="current">Loading…</div>
+    <div id="range"></div>
+    <div class="meter" role="progressbar" aria-label="Progress through the current block" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="bar"></div></div>
+    <div class="facts">
+      <div class="fact"><span class="eyebrow">Time remaining</span><span class="value" id="remaining">—</span></div>
+      <div class="fact"><span class="eyebrow">Up next</span><span class="value" id="next">—</span></div>
+    </div>
+  </section>
+
+  <section class="card schedule">
+    <h2>Today’s schedule</h2>
+    <ol id="schedule"></ol>
+  </section>
+
+  <footer>Questions or corrections? Please contact Mr. Sidarous.<br>Revised 2026/08/19 to add new SY27 dates.</footer>
+</main>
+
+<script>
+// Calendar arrays: paste the spreadsheet output here exactly as before.
+const goldArray = [
+"2026-08-27","2026-08-31","2026-09-03","2026-09-08","2026-09-10","2026-09-14","2026-09-17","2026-09-21","2026-09-28","2026-10-01","2026-10-05","2026-10-08","2026-10-13","2026-10-15","2026-10-19","2026-10-22","2026-10-26","2026-10-29","2026-11-02","2026-11-05","2026-11-09","2026-11-12","2026-11-16","2026-11-19","2026-11-30","2026-12-03","2026-12-07","2026-12-10","2026-12-14","2026-12-16","2027-01-05","2027-01-07","2027-01-11","2027-01-14","2027-01-19","2027-01-21","2027-01-25","2027-01-27","2027-02-01","2027-02-04","2027-02-08","2027-02-11","2027-02-16","2027-02-18","2027-02-22","2027-02-25","2027-03-01","2027-03-04","2027-03-08","2027-03-11","2027-03-15","2027-03-17","2027-03-29","2027-04-01","2027-04-05","2027-04-08","2027-04-13","2027-04-15","2027-04-19","2027-04-22","2027-04-26","2027-04-29","2027-05-03","2027-05-06","2027-05-10","2027-05-13","2027-05-17","2027-05-20","2027-05-24","2027-05-27","2027-06-01","2027-06-03","2027-06-07","2027-06-09","2027-07-05"
+];
+const maroonArray = [
+"2026-08-28","2026-09-01","2026-09-04","2026-09-09","2026-09-11","2026-09-15","2026-09-18","2026-09-22","2026-09-29","2026-10-02","2026-10-06","2026-10-09","2026-10-14","2026-10-16","2026-10-20","2026-10-23","2026-10-27","2026-10-30","2026-11-03","2026-11-06","2026-11-10","2026-11-13","2026-11-17","2026-11-20","2026-12-01","2026-12-04","2026-12-08","2026-12-11","2026-12-15","2026-12-17","2027-01-06","2027-01-08","2027-01-12","2027-01-15","2027-01-20","2027-01-22","2027-01-26","2027-01-28","2027-02-02","2027-02-05","2027-02-09","2027-02-12","2027-02-17","2027-02-19","2027-02-24","2027-02-26","2027-03-02","2027-03-05","2027-03-09","2027-03-12","2027-03-16","2027-03-18","2027-03-30","2027-04-02","2027-04-07","2027-04-09","2027-04-14","2027-04-16","2027-04-20","2027-04-23","2027-04-27","2027-04-30","2027-05-04","2027-05-07","2027-05-11","2027-05-14","2027-05-18","2027-05-21","2027-05-25","2027-05-28","2027-06-02","2027-06-04","2027-06-08","2027-06-10","2027-07-06"
+];
+const oneArray = [
+"2026-09-23"
+];
+const oneAdvArray = [
+"2026-08-24","2026-08-25","2026-08-26","2026-09-02","9/16/2026"
+];
+const collArray = [
+"2026-09-30","2026-10-07","2026-10-21","2026-10-28","2026-11-18","2026-12-02","2026-12-09","2027-01-13","2027-02-10","2027-03-10","2027-03-31","2027-04-21","2027-04-28","2027-05-05","2027-05-12","2027-06-11"
+];
+const amArray = [
+"2027-05-26"
+];
+const pmArray = [
+"2026-09-24","2026-11-04","2026-12-18","2027-02-03","2027-03-03","2027-03-19","5/19/2027"
+];
+const finalArray = [
+
+];
+const absArray = [
+"2026-08-20","2026-08-21","2026-09-07","2026-09-25","2026-10-12","2026-11-11","2026-11-23","2026-11-24","2026-11-25","2026-11-26","2026-11-27","2026-12-21","2026-12-22","2026-12-23","2026-12-24","2026-12-25","2026-12-28","2026-12-29","2026-12-30","2026-12-31","2027-01-01","2027-01-04","2027-01-18","2027-01-29","2027-02-15","2027-02-23","2027-03-22","2027-03-23","2027-03-24","2027-03-25","2027-03-26","2027-04-06","2027-04-12","2027-05-31","2027-06-14","2027-06-15","2027-06-16","2027-06-17","2027-06-18","2027-06-21","2027-06-22","2027-06-23","2027-06-24","2027-06-25","6/28/2027","6/29/2027","6/30/2027","7/1/2027","7/2/2027"
+];
+const finals1 = [
+
+];
+const finals2 = [
+
+];
+const finals3 = [
+
+];
+const finals4 = [
+
+];
+const wkendArray = [
+"2026-08-22","2026-08-23","2026-08-29","2026-08-30","2026-09-05","2026-09-06","2026-09-12","2026-09-13","2026-09-19","2026-09-20","2026-09-26","2026-09-27","2026-10-03","2026-10-04","2026-10-10","2026-10-11","2026-10-17","2026-10-18","2026-10-24","2026-10-25","2026-10-31","2026-11-01","2026-11-07","2026-11-08","2026-11-14","2026-11-15","2026-11-21","2026-11-22","2026-11-28","2026-11-29","2026-12-05","2026-12-06","2026-12-12","2026-12-13","2026-12-19","2026-12-20","2026-12-26","2026-12-27","2027-01-02","2027-01-03","2027-01-09","2027-01-10","2027-01-16","2027-01-17","2027-01-23","2027-01-24","2027-01-30","2027-01-31","2027-02-06","2027-02-07","2027-02-13","2027-02-14","2027-02-20","2027-02-21","2027-02-27","2027-02-28","2027-03-06","2027-03-07","2027-03-13","2027-03-14","2027-03-20","2027-03-21","2027-03-27","2027-03-28","2027-04-03","2027-04-04","2027-04-10","2027-04-11","2027-04-17","2027-04-18","2027-04-24","2027-04-25","2027-05-01","2027-05-02","2027-05-08","2027-05-09","2027-05-15","2027-05-16","2027-05-22","2027-05-23","2027-05-29","2027-05-30","2027-06-05","2027-06-06","2027-06-12","2027-06-13","2027-06-19","2027-06-20","2027-06-26","2027-06-27","2027-07-03","2027-07-04"
+];
+const swoop = [
+
+];
+
+const gold=[
+  [480,'1st Period'],[580,'Passing Period (2nd / A)'],[588,'2nd Period / A Period'],[635,'Passing Period (B)'],[641,'2nd Period / B Period'],[688,'Passing Period (3rd / C)'],[696,'3rd Period / C Period'],[743,'Passing Period (D)'],[749,'3rd Period / D Period'],[796,'Passing Period (4th)'],[804,'4th Period'],[905,'End of School']
+];
+const maroon=gold.map(([t,n])=>[t,n.replace('1st','5th').replace('2nd','6th').replace('3rd','7th').replace('4th','8th')]);
+const schedules={
+  gold:{name:'Gold 1–4 Day',color:'#9a6700',blocks:gold},
+  maroon:{name:'Maroon 5–8 Day',color:'#7b1721',blocks:maroon},
+  one:{name:'1–8 Day without Advisory',color:'#1769aa',blocks:[[480,'1st Period'],[528,'5th Period Passing'],[533,'5th Period'],[581,'2nd / A Period Passing'],[586,'2nd / A Period'],[634,'6th / B Period Passing'],[639,'6th / B Period'],[687,'3rd / C Period Passing'],[692,'3rd / C Period'],[740,'7th / D Period Passing'],[745,'7th / D Period'],[793,'4th Period Passing'],[798,'4th Period'],[846,'8th Period Passing'],[851,'8th Period'],[899,'End of Day']]},
+  advisory:{name:'1–8 Day with Advisory',color:'#1769aa',blocks:[[480,'Advisory / Homeroom'],[530,'Passing Period (1st)'],[540,'1st Period'],[580,'Passing Period (5th)'],[585,'5th Period'],[625,'Passing Period (2nd / A)'],[630,'2nd Period / A Period'],[670,'Passing Period (6th / B)'],[675,'6th Period / B Period'],[715,'Passing Period (3rd / C)'],[720,'3rd Period / C Period'],[760,'Passing Period (7th / D)'],[765,'7th Period / D Period'],[805,'Passing Period (4th)'],[810,'4th Period'],[850,'Passing Period (8th)'],[855,'8th Period'],[895,'End of School']]},
+  colloquium:{name:'Colloquium Day without Assembly',color:'#21834d',blocks:[[480,'Advisory'],[522,'Advisory Passing'],[527,'A.M. Colloquium Block'],[611,'Colloquium Passing'],[616,'Flex 1 / Lunch A'],[658,'Flex 1 / Lunch A Passing'],[663,'Flex 2 / Lunch B'],[705,'Flex 2 / Lunch B Passing'],[710,'Flex 3 / Lunch C'],[752,'Flex 3 / Lunch C Passing'],[757,'Flex 4 / Lunch D'],[799,'Flex 4 / Lunch D Passing'],[804,'P.M. Colloquium Block'],[888,'End of Day']]},
+  amAssembly:{name:'Colloquium Day with AM Assembly',color:'#21834d',blocks:[[480,'AM Colloquium'],[537,'Advisory Passing'],[542,'Advisory / Assembly'],[637,'Flex 1 / Lunch A Passing'],[642,'Flex 1 / Lunch A'],[684,'Flex 2 / Lunch B Passing'],[689,'Flex 2 / Lunch B'],[731,'Flex 3 / Lunch C Passing'],[736,'Flex 3 / Lunch C'],[778,'Flex 4 / Lunch D Passing'],[783,'Flex 4 / Lunch D'],[825,'P.M. Colloquium Block Passing'],[830,'P.M. Colloquium Block'],[888,'End of Day']]},
+  pmAssembly:{name:'Colloquium Day with PM Assembly',color:'#21834d',blocks:[[480,'A.M. Colloquium Block'],[538,'Colloquium Passing'],[543,'P.M. Colloquium Block'],[601,'Flex A / Lunch A Passing'],[606,'Flex A / Lunch A'],[648,'Flex B / Lunch B Passing'],[653,'Flex B / Lunch B'],[695,'Flex C / Lunch C Passing'],[700,'Flex C / Lunch C'],[742,'Flex D / Lunch D Passing'],[747,'Flex D / Lunch D'],[789,'P.M. Assembly Passing'],[794,'P.M. Assembly'],[888,'End of Day']]},
+  finalExam:{name:'Final Exams',color:'#38464b',blocks:[[480,'Final Exams'],[905,'End of School']]},
+  finals1:{name:'Finals Day 1',color:'#b25b48',blocks:gold},finals2:{name:'Finals Day 2',color:'#b25b48',blocks:gold},finals3:{name:'Finals Day 3',color:'#b25b48',blocks:gold},finals4:{name:'Finals Day 4',color:'#b25b48',blocks:gold},
+  swoop:{name:'Swoopapalooza',color:'#54207c',blocks:[[480,'Advisory'],[520,'Advisory Passing'],[525,'Assembly'],[590,'Assembly Passing'],[600,'Swoopapalooza'],[888,'End of Day']]},
+  noSchool:{name:'Student Non-Attendance',color:'#555',allDay:'Student Non-Attendance'},
+  weekend:{name:'Weekend',color:'#333',allDay:'Weekend'}
+};
+
+const $=id=>document.getElementById(id);
+let renderedDate='';
+
+function dateKey(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function hasDate(array,key){
+  return array.some(value=>{
+    if(value===key)return true;
+    const parts=value.split('/');
+    return parts.length===3&&`${parts[2]}-${parts[0].padStart(2,'0')}-${parts[1].padStart(2,'0')}`===key;
+  });
+}
+function findSchedule(d){
+  const key=dateKey(d);
+  const calendar=[
+    [goldArray,schedules.gold],[maroonArray,schedules.maroon],[oneArray,schedules.one],
+    [oneAdvArray,schedules.advisory],[collArray,schedules.colloquium],
+    [amArray,schedules.amAssembly],[pmArray,schedules.pmAssembly],
+    [finalArray,schedules.finalExam],[absArray,schedules.noSchool],
+    [wkendArray,schedules.weekend],[finals1,schedules.finals1],
+    [finals2,schedules.finals2],[finals3,schedules.finals3],
+    [finals4,schedules.finals4],[swoop,schedules.swoop]
+  ];
+  for(const [array,schedule] of calendar)if(hasDate(array,key))return schedule;
+  return null;
+}
+function timeLabel(minutes){
+  const h=Math.floor(minutes/60),m=minutes%60;
+  return `${h%12||12}:${String(m).padStart(2,'0')} ${h<12?'AM':'PM'}`;
+}
+function duration(seconds){
+  seconds=Math.max(0,Math.ceil(seconds));
+  const h=Math.floor(seconds/3600),m=Math.floor(seconds%3600/60),s=seconds%60;
+  return h?`${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`:`${m}:${String(s).padStart(2,'0')}`;
+}
+function renderSchedule(info,active=-1){
+  const list=$('schedule');
+  if(!info){list.innerHTML='<li>No schedule is listed for this date.</li>';return}
+  if(info.allDay){list.innerHTML=`<li class="active"><span>All day</span><span>${info.allDay}</span></li>`;return}
+  list.innerHTML=info.blocks.slice(0,-1).map(([start,name],i)=>`<li${i===active?' class="active"':''}><span class="time">${timeLabel(start)}–${timeLabel(info.blocks[i+1][0])}</span><span>${name}</span></li>`).join('')+`<li><span class="time">${timeLabel(info.blocks.at(-1)[0])}</span><span>${info.blocks.at(-1)[1]}</span></li>`;
+}
+function update(){
+  const now=new Date(),key=dateKey(now),info=findSchedule(now);
+  $('clock').textContent=now.toLocaleString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit',second:'2-digit'});
+  $('day').textContent=info?info.name:'Schedule unavailable';
+  document.documentElement.style.setProperty('--accent',info?.color||'#66151c');
+  if(!info){
+    $('status').textContent='Today';$('current').textContent='No schedule listed';$('range').textContent='Please check the official calendar.';$('remaining').textContent='—';$('next').textContent='—';setProgress(0);
+    if(renderedDate!==key){renderSchedule(null);renderedDate=key}return;
+  }
+  if(info.allDay){
+    $('status').textContent='Today';$('current').textContent=info.allDay;$('range').textContent='All day';$('remaining').textContent='—';$('next').textContent='—';setProgress(100);
+    if(renderedDate!==key){renderSchedule(info);renderedDate=key}return;
+  }
+  const minute=now.getHours()*60+now.getMinutes()+now.getSeconds()/60,b=info.blocks;
+  let active=-1;
+  for(let i=0;i<b.length-1;i++)if(minute>=b[i][0]&&minute<b[i+1][0])active=i;
+  if(minute<b[0][0]){
+    $('status').textContent='Before school';$('current').textContent='School has not started';$('range').textContent=`Begins at ${timeLabel(b[0][0])}`;$('remaining').textContent=duration((b[0][0]-minute)*60);$('next').textContent=b[0][1];setProgress(0);
+  }else if(minute>=b.at(-1)[0]){
+    $('status').textContent='For today';$('current').textContent=b.at(-1)[1];$('range').textContent=`Since ${timeLabel(b.at(-1)[0])}`;$('remaining').textContent='—';$('next').textContent='—';setProgress(100);
+  }else{
+    const start=b[active][0],end=b[active+1][0];
+    $('status').textContent='Right now';$('current').textContent=b[active][1];$('range').textContent=`${timeLabel(start)}–${timeLabel(end)}`;$('remaining').textContent=duration((end-minute)*60);$('next').textContent=b[active+1][1];setProgress((minute-start)/(end-start)*100);
+  }
+  const renderKey=`${key}:${active}`;
+  if(renderedDate!==renderKey){renderSchedule(info,active);renderedDate=renderKey}
+}
+function setProgress(value){const n=Math.max(0,Math.min(100,value));$('bar').style.width=`${n}%`;$('bar').parentElement.setAttribute('aria-valuenow',Math.round(n))}
+update();setInterval(update,1000);
+</script>
+</body>
+</html>

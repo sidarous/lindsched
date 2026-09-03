@@ -1,0 +1,906 @@
+{
+  "schemaVersion": 3,
+  "dataVersion": "2026-08-19.1",
+  "schoolYear": "2026-27",
+  "timezone": "America/Chicago",
+  "site": {
+    "schoolName": "Lindblom",
+    "title": "Lindblom Current Schedule",
+    "description": "The Lindblom daily schedule: today's schedule, the current class, time remaining, and what comes next.",
+    "defaultColor": "#66151c",
+    "contact": "Questions or corrections? Please contact Mr. Sidarous."
+  },
+  "revisionNote": "Revised 2026/08/19 to add new SY27 dates.",
+  "dayTypes": [
+    {
+      "label": "Gold 1–4 Day",
+      "color": "#9a6700",
+      "dates": [
+        "2026-08-27",
+        "2026-08-31",
+        "2026-09-03",
+        "2026-09-08",
+        "2026-09-10",
+        "2026-09-14",
+        "2026-09-17",
+        "2026-09-21",
+        "2026-09-28",
+        "2026-10-01",
+        "2026-10-05",
+        "2026-10-08",
+        "2026-10-13",
+        "2026-10-15",
+        "2026-10-19",
+        "2026-10-22",
+        "2026-10-26",
+        "2026-10-29",
+        "2026-11-02",
+        "2026-11-05",
+        "2026-11-09",
+        "2026-11-12",
+        "2026-11-16",
+        "2026-11-19",
+        "2026-11-30",
+        "2026-12-03",
+        "2026-12-07",
+        "2026-12-10",
+        "2026-12-14",
+        "2026-12-16",
+        "2027-01-05",
+        "2027-01-07",
+        "2027-01-11",
+        "2027-01-14",
+        "2027-01-19",
+        "2027-01-21",
+        "2027-01-25",
+        "2027-01-27",
+        "2027-02-01",
+        "2027-02-04",
+        "2027-02-08",
+        "2027-02-11",
+        "2027-02-16",
+        "2027-02-18",
+        "2027-02-22",
+        "2027-02-25",
+        "2027-03-01",
+        "2027-03-04",
+        "2027-03-08",
+        "2027-03-11",
+        "2027-03-15",
+        "2027-03-17",
+        "2027-03-29",
+        "2027-04-01",
+        "2027-04-05",
+        "2027-04-08",
+        "2027-04-13",
+        "2027-04-15",
+        "2027-04-19",
+        "2027-04-22",
+        "2027-04-26",
+        "2027-04-29",
+        "2027-05-03",
+        "2027-05-06",
+        "2027-05-10",
+        "2027-05-13",
+        "2027-05-17",
+        "2027-05-20",
+        "2027-05-24",
+        "2027-05-27",
+        "2027-06-01",
+        "2027-06-03",
+        "2027-06-07",
+        "2027-06-09",
+        "2027-07-05"
+      ],
+      "schedule": "gold"
+    },
+    {
+      "label": "Maroon 5–8 Day",
+      "color": "#7b1721",
+      "dates": [
+        "2026-08-28",
+        "2026-09-01",
+        "2026-09-04",
+        "2026-09-09",
+        "2026-09-11",
+        "2026-09-15",
+        "2026-09-18",
+        "2026-09-22",
+        "2026-09-29",
+        "2026-10-02",
+        "2026-10-06",
+        "2026-10-09",
+        "2026-10-14",
+        "2026-10-16",
+        "2026-10-20",
+        "2026-10-23",
+        "2026-10-27",
+        "2026-10-30",
+        "2026-11-03",
+        "2026-11-06",
+        "2026-11-10",
+        "2026-11-13",
+        "2026-11-17",
+        "2026-11-20",
+        "2026-12-01",
+        "2026-12-04",
+        "2026-12-08",
+        "2026-12-11",
+        "2026-12-15",
+        "2026-12-17",
+        "2027-01-06",
+        "2027-01-08",
+        "2027-01-12",
+        "2027-01-15",
+        "2027-01-20",
+        "2027-01-22",
+        "2027-01-26",
+        "2027-01-28",
+        "2027-02-02",
+        "2027-02-05",
+        "2027-02-09",
+        "2027-02-12",
+        "2027-02-17",
+        "2027-02-19",
+        "2027-02-24",
+        "2027-02-26",
+        "2027-03-02",
+        "2027-03-05",
+        "2027-03-09",
+        "2027-03-12",
+        "2027-03-16",
+        "2027-03-18",
+        "2027-03-30",
+        "2027-04-02",
+        "2027-04-07",
+        "2027-04-09",
+        "2027-04-14",
+        "2027-04-16",
+        "2027-04-20",
+        "2027-04-23",
+        "2027-04-27",
+        "2027-04-30",
+        "2027-05-04",
+        "2027-05-07",
+        "2027-05-11",
+        "2027-05-14",
+        "2027-05-18",
+        "2027-05-21",
+        "2027-05-25",
+        "2027-05-28",
+        "2027-06-02",
+        "2027-06-04",
+        "2027-06-08",
+        "2027-06-10",
+        "2027-07-06"
+      ],
+      "schedule": "maroon"
+    },
+    {
+      "label": "1–8 Day without Advisory",
+      "color": "#1769aa",
+      "dates": [
+        "2026-09-23"
+      ],
+      "schedule": "one"
+    },
+    {
+      "label": "1–8 Day with Advisory",
+      "color": "#1769aa",
+      "dates": [
+        "2026-08-24",
+        "2026-08-25",
+        "2026-08-26",
+        "2026-09-02",
+        "2026-09-16"
+      ],
+      "schedule": "advisory"
+    },
+    {
+      "label": "Colloquium Day without Assembly",
+      "color": "#21834d",
+      "dates": [
+        "2026-09-30",
+        "2026-10-07",
+        "2026-10-21",
+        "2026-10-28",
+        "2026-11-18",
+        "2026-12-02",
+        "2026-12-09",
+        "2027-01-13",
+        "2027-02-10",
+        "2027-03-10",
+        "2027-03-31",
+        "2027-04-21",
+        "2027-04-28",
+        "2027-05-05",
+        "2027-05-12",
+        "2027-06-11"
+      ],
+      "schedule": "colloquium"
+    },
+    {
+      "label": "Colloquium Day with AM Assembly",
+      "color": "#21834d",
+      "dates": [
+        "2027-05-26"
+      ],
+      "schedule": "amAssembly"
+    },
+    {
+      "label": "Colloquium Day with PM Assembly",
+      "color": "#21834d",
+      "dates": [
+        "2026-09-24",
+        "2026-11-04",
+        "2026-12-18",
+        "2027-02-03",
+        "2027-03-03",
+        "2027-03-19",
+        "2027-05-19"
+      ],
+      "schedule": "pmAssembly"
+    },
+    {
+      "label": "Final Exams",
+      "color": "#38464b",
+      "dates": [],
+      "schedule": "finalExam"
+    },
+    {
+      "label": "Student Non-Attendance",
+      "color": "#555555",
+      "dates": [
+        "2026-08-20",
+        "2026-08-21",
+        "2026-09-07",
+        "2026-09-25",
+        "2026-10-12",
+        "2026-11-11",
+        "2026-11-23",
+        "2026-11-24",
+        "2026-11-25",
+        "2026-11-26",
+        "2026-11-27",
+        "2026-12-21",
+        "2026-12-22",
+        "2026-12-23",
+        "2026-12-24",
+        "2026-12-25",
+        "2026-12-28",
+        "2026-12-29",
+        "2026-12-30",
+        "2026-12-31",
+        "2027-01-01",
+        "2027-01-04",
+        "2027-01-18",
+        "2027-01-29",
+        "2027-02-15",
+        "2027-02-23",
+        "2027-03-22",
+        "2027-03-23",
+        "2027-03-24",
+        "2027-03-25",
+        "2027-03-26",
+        "2027-04-06",
+        "2027-04-12",
+        "2027-05-31",
+        "2027-06-14",
+        "2027-06-15",
+        "2027-06-16",
+        "2027-06-17",
+        "2027-06-18",
+        "2027-06-21",
+        "2027-06-22",
+        "2027-06-23",
+        "2027-06-24",
+        "2027-06-25",
+        "2027-06-28",
+        "2027-06-29",
+        "2027-06-30",
+        "2027-07-01",
+        "2027-07-02"
+      ],
+      "allDay": "Student Non-Attendance"
+    },
+    {
+      "label": "Weekend",
+      "color": "#333333",
+      "dates": [
+        "2026-08-22",
+        "2026-08-23",
+        "2026-08-29",
+        "2026-08-30",
+        "2026-09-05",
+        "2026-09-06",
+        "2026-09-12",
+        "2026-09-13",
+        "2026-09-19",
+        "2026-09-20",
+        "2026-09-26",
+        "2026-09-27",
+        "2026-10-03",
+        "2026-10-04",
+        "2026-10-10",
+        "2026-10-11",
+        "2026-10-17",
+        "2026-10-18",
+        "2026-10-24",
+        "2026-10-25",
+        "2026-10-31",
+        "2026-11-01",
+        "2026-11-07",
+        "2026-11-08",
+        "2026-11-14",
+        "2026-11-15",
+        "2026-11-21",
+        "2026-11-22",
+        "2026-11-28",
+        "2026-11-29",
+        "2026-12-05",
+        "2026-12-06",
+        "2026-12-12",
+        "2026-12-13",
+        "2026-12-19",
+        "2026-12-20",
+        "2026-12-26",
+        "2026-12-27",
+        "2027-01-02",
+        "2027-01-03",
+        "2027-01-09",
+        "2027-01-10",
+        "2027-01-16",
+        "2027-01-17",
+        "2027-01-23",
+        "2027-01-24",
+        "2027-01-30",
+        "2027-01-31",
+        "2027-02-06",
+        "2027-02-07",
+        "2027-02-13",
+        "2027-02-14",
+        "2027-02-20",
+        "2027-02-21",
+        "2027-02-27",
+        "2027-02-28",
+        "2027-03-06",
+        "2027-03-07",
+        "2027-03-13",
+        "2027-03-14",
+        "2027-03-20",
+        "2027-03-21",
+        "2027-03-27",
+        "2027-03-28",
+        "2027-04-03",
+        "2027-04-04",
+        "2027-04-10",
+        "2027-04-11",
+        "2027-04-17",
+        "2027-04-18",
+        "2027-04-24",
+        "2027-04-25",
+        "2027-05-01",
+        "2027-05-02",
+        "2027-05-08",
+        "2027-05-09",
+        "2027-05-15",
+        "2027-05-16",
+        "2027-05-22",
+        "2027-05-23",
+        "2027-05-29",
+        "2027-05-30",
+        "2027-06-05",
+        "2027-06-06",
+        "2027-06-12",
+        "2027-06-13",
+        "2027-06-19",
+        "2027-06-20",
+        "2027-06-26",
+        "2027-06-27",
+        "2027-07-03",
+        "2027-07-04"
+      ],
+      "allDay": "Weekend"
+    },
+    {
+      "label": "Finals Day 1",
+      "color": "#b25b48",
+      "dates": [],
+      "schedule": "gold"
+    },
+    {
+      "label": "Finals Day 2",
+      "color": "#b25b48",
+      "dates": [],
+      "schedule": "gold"
+    },
+    {
+      "label": "Finals Day 3",
+      "color": "#b25b48",
+      "dates": [],
+      "schedule": "gold"
+    },
+    {
+      "label": "Finals Day 4",
+      "color": "#b25b48",
+      "dates": [],
+      "schedule": "gold"
+    },
+    {
+      "label": "Swoopapalooza",
+      "color": "#54207c",
+      "dates": [],
+      "schedule": "swoop"
+    }
+  ],
+  "schedules": {
+    "gold": {
+      "blocks": [
+        {
+          "start": "08:00",
+          "label": "1st Period"
+        },
+        {
+          "start": "09:40",
+          "label": "Passing Period (2nd / A)"
+        },
+        {
+          "start": "09:48",
+          "label": "2nd Period / A Period"
+        },
+        {
+          "start": "10:35",
+          "label": "Passing Period (B)"
+        },
+        {
+          "start": "10:41",
+          "label": "2nd Period / B Period"
+        },
+        {
+          "start": "11:28",
+          "label": "Passing Period (3rd / C)"
+        },
+        {
+          "start": "11:36",
+          "label": "3rd Period / C Period"
+        },
+        {
+          "start": "12:23",
+          "label": "Passing Period (D)"
+        },
+        {
+          "start": "12:29",
+          "label": "3rd Period / D Period"
+        },
+        {
+          "start": "13:16",
+          "label": "Passing Period (4th)"
+        },
+        {
+          "start": "13:24",
+          "label": "4th Period"
+        },
+        {
+          "start": "15:05",
+          "label": "End of School"
+        }
+      ]
+    },
+    "maroon": {
+      "blocks": [
+        {
+          "start": "08:00",
+          "label": "5th Period"
+        },
+        {
+          "start": "09:40",
+          "label": "Passing Period (6th / A)"
+        },
+        {
+          "start": "09:48",
+          "label": "6th Period / A Period"
+        },
+        {
+          "start": "10:35",
+          "label": "Passing Period (B)"
+        },
+        {
+          "start": "10:41",
+          "label": "6th Period / B Period"
+        },
+        {
+          "start": "11:28",
+          "label": "Passing Period (7th / C)"
+        },
+        {
+          "start": "11:36",
+          "label": "7th Period / C Period"
+        },
+        {
+          "start": "12:23",
+          "label": "Passing Period (D)"
+        },
+        {
+          "start": "12:29",
+          "label": "7th Period / D Period"
+        },
+        {
+          "start": "13:16",
+          "label": "Passing Period (8th)"
+        },
+        {
+          "start": "13:24",
+          "label": "8th Period"
+        },
+        {
+          "start": "15:05",
+          "label": "End of School"
+        }
+      ]
+    },
+    "one": {
+      "blocks": [
+        {
+          "start": "08:00",
+          "label": "1st Period"
+        },
+        {
+          "start": "08:48",
+          "label": "5th Period Passing"
+        },
+        {
+          "start": "08:53",
+          "label": "5th Period"
+        },
+        {
+          "start": "09:41",
+          "label": "2nd / A Period Passing"
+        },
+        {
+          "start": "09:46",
+          "label": "2nd / A Period"
+        },
+        {
+          "start": "10:34",
+          "label": "6th / B Period Passing"
+        },
+        {
+          "start": "10:39",
+          "label": "6th / B Period"
+        },
+        {
+          "start": "11:27",
+          "label": "3rd / C Period Passing"
+        },
+        {
+          "start": "11:32",
+          "label": "3rd / C Period"
+        },
+        {
+          "start": "12:20",
+          "label": "7th / D Period Passing"
+        },
+        {
+          "start": "12:25",
+          "label": "7th / D Period"
+        },
+        {
+          "start": "13:13",
+          "label": "4th Period Passing"
+        },
+        {
+          "start": "13:18",
+          "label": "4th Period"
+        },
+        {
+          "start": "14:06",
+          "label": "8th Period Passing"
+        },
+        {
+          "start": "14:11",
+          "label": "8th Period"
+        },
+        {
+          "start": "14:59",
+          "label": "End of Day"
+        }
+      ]
+    },
+    "advisory": {
+      "blocks": [
+        {
+          "start": "08:00",
+          "label": "Advisory / Homeroom"
+        },
+        {
+          "start": "08:50",
+          "label": "Passing Period (1st)"
+        },
+        {
+          "start": "09:00",
+          "label": "1st Period"
+        },
+        {
+          "start": "09:40",
+          "label": "Passing Period (5th)"
+        },
+        {
+          "start": "09:45",
+          "label": "5th Period"
+        },
+        {
+          "start": "10:25",
+          "label": "Passing Period (2nd / A)"
+        },
+        {
+          "start": "10:30",
+          "label": "2nd Period / A Period"
+        },
+        {
+          "start": "11:10",
+          "label": "Passing Period (6th / B)"
+        },
+        {
+          "start": "11:15",
+          "label": "6th Period / B Period"
+        },
+        {
+          "start": "11:55",
+          "label": "Passing Period (3rd / C)"
+        },
+        {
+          "start": "12:00",
+          "label": "3rd Period / C Period"
+        },
+        {
+          "start": "12:40",
+          "label": "Passing Period (7th / D)"
+        },
+        {
+          "start": "12:45",
+          "label": "7th Period / D Period"
+        },
+        {
+          "start": "13:25",
+          "label": "Passing Period (4th)"
+        },
+        {
+          "start": "13:30",
+          "label": "4th Period"
+        },
+        {
+          "start": "14:10",
+          "label": "Passing Period (8th)"
+        },
+        {
+          "start": "14:15",
+          "label": "8th Period"
+        },
+        {
+          "start": "14:55",
+          "label": "End of School"
+        }
+      ]
+    },
+    "colloquium": {
+      "blocks": [
+        {
+          "start": "08:00",
+          "label": "Advisory"
+        },
+        {
+          "start": "08:42",
+          "label": "Advisory Passing"
+        },
+        {
+          "start": "08:47",
+          "label": "A.M. Colloquium Block"
+        },
+        {
+          "start": "10:11",
+          "label": "Colloquium Passing"
+        },
+        {
+          "start": "10:16",
+          "label": "Flex 1 / Lunch A"
+        },
+        {
+          "start": "10:58",
+          "label": "Flex 1 / Lunch A Passing"
+        },
+        {
+          "start": "11:03",
+          "label": "Flex 2 / Lunch B"
+        },
+        {
+          "start": "11:45",
+          "label": "Flex 2 / Lunch B Passing"
+        },
+        {
+          "start": "11:50",
+          "label": "Flex 3 / Lunch C"
+        },
+        {
+          "start": "12:32",
+          "label": "Flex 3 / Lunch C Passing"
+        },
+        {
+          "start": "12:37",
+          "label": "Flex 4 / Lunch D"
+        },
+        {
+          "start": "13:19",
+          "label": "Flex 4 / Lunch D Passing"
+        },
+        {
+          "start": "13:24",
+          "label": "P.M. Colloquium Block"
+        },
+        {
+          "start": "14:48",
+          "label": "End of Day"
+        }
+      ]
+    },
+    "amAssembly": {
+      "blocks": [
+        {
+          "start": "08:00",
+          "label": "AM Colloquium"
+        },
+        {
+          "start": "08:57",
+          "label": "Advisory Passing"
+        },
+        {
+          "start": "09:02",
+          "label": "Advisory / Assembly"
+        },
+        {
+          "start": "10:37",
+          "label": "Flex 1 / Lunch A Passing"
+        },
+        {
+          "start": "10:42",
+          "label": "Flex 1 / Lunch A"
+        },
+        {
+          "start": "11:24",
+          "label": "Flex 2 / Lunch B Passing"
+        },
+        {
+          "start": "11:29",
+          "label": "Flex 2 / Lunch B"
+        },
+        {
+          "start": "12:11",
+          "label": "Flex 3 / Lunch C Passing"
+        },
+        {
+          "start": "12:16",
+          "label": "Flex 3 / Lunch C"
+        },
+        {
+          "start": "12:58",
+          "label": "Flex 4 / Lunch D Passing"
+        },
+        {
+          "start": "13:03",
+          "label": "Flex 4 / Lunch D"
+        },
+        {
+          "start": "13:45",
+          "label": "P.M. Colloquium Block Passing"
+        },
+        {
+          "start": "13:50",
+          "label": "P.M. Colloquium Block"
+        },
+        {
+          "start": "14:48",
+          "label": "End of Day"
+        }
+      ]
+    },
+    "pmAssembly": {
+      "blocks": [
+        {
+          "start": "08:00",
+          "label": "A.M. Colloquium Block"
+        },
+        {
+          "start": "08:58",
+          "label": "Colloquium Passing"
+        },
+        {
+          "start": "09:03",
+          "label": "P.M. Colloquium Block"
+        },
+        {
+          "start": "10:01",
+          "label": "Flex A / Lunch A Passing"
+        },
+        {
+          "start": "10:06",
+          "label": "Flex A / Lunch A"
+        },
+        {
+          "start": "10:48",
+          "label": "Flex B / Lunch B Passing"
+        },
+        {
+          "start": "10:53",
+          "label": "Flex B / Lunch B"
+        },
+        {
+          "start": "11:35",
+          "label": "Flex C / Lunch C Passing"
+        },
+        {
+          "start": "11:40",
+          "label": "Flex C / Lunch C"
+        },
+        {
+          "start": "12:22",
+          "label": "Flex D / Lunch D Passing"
+        },
+        {
+          "start": "12:27",
+          "label": "Flex D / Lunch D"
+        },
+        {
+          "start": "13:09",
+          "label": "P.M. Assembly Passing"
+        },
+        {
+          "start": "13:14",
+          "label": "P.M. Assembly"
+        },
+        {
+          "start": "14:48",
+          "label": "End of Day"
+        }
+      ]
+    },
+    "finalExam": {
+      "blocks": [
+        {
+          "start": "08:00",
+          "label": "Final Exams"
+        },
+        {
+          "start": "15:05",
+          "label": "End of School"
+        }
+      ]
+    },
+    "swoop": {
+      "blocks": [
+        {
+          "start": "08:00",
+          "label": "Advisory"
+        },
+        {
+          "start": "08:40",
+          "label": "Advisory Passing"
+        },
+        {
+          "start": "08:45",
+          "label": "Assembly"
+        },
+        {
+          "start": "09:50",
+          "label": "Assembly Passing"
+        },
+        {
+          "start": "10:00",
+          "label": "Swoopapalooza"
+        },
+        {
+          "start": "14:48",
+          "label": "End of Day"
+        }
+      ]
+    }
+  }
+}

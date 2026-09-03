@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Build, edit, validate, and download schedule-data.json files.">
+<title>Schedule JSON Builder</title>
+<style>
+:root{--ink:#251f20;--muted:#6e6465;--paper:#fff;--wash:#f5f1ee;--line:#ded6d2;--accent:#66151c;--accent2:#9a6700;--danger:#a32626;--good:#207044;--shadow:0 8px 28px #38251b14;font:16px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--wash)}
+*{box-sizing:border-box}body{margin:0}button,input,select,textarea{font:inherit}button{cursor:pointer}.shell{width:min(1180px,calc(100% - 28px));margin:auto;padding:28px 0 70px}header{display:flex;gap:20px;align-items:flex-start;justify-content:space-between;margin-bottom:20px}.eyebrow{margin:0 0 5px;color:var(--accent);font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:.76rem}h1{font-size:clamp(1.8rem,4vw,3rem);line-height:1.05;margin:0}header p{max-width:720px;color:var(--muted);margin:.7rem 0 0}.toolbar{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;gap:8px;padding:12px;margin-bottom:18px;background:#fffefdf2;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);backdrop-filter:blur(10px)}button,.button{border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);padding:.6rem .85rem;font-weight:700;text-decoration:none}.primary{background:var(--accent);border-color:var(--accent);color:#fff}.secondary{background:#f5ecec;border-color:#dcc5c7;color:var(--accent)}.danger{color:var(--danger)}button:hover{filter:brightness(.97)}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #3788d855;outline-offset:1px}.status{margin-left:auto;align-self:center;color:var(--muted);font-size:.9rem}.status.good{color:var(--good)}.status.bad{color:var(--danger)}.panel{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:clamp(16px,3vw,26px);box-shadow:var(--shadow);margin:0 0 18px}.panel-head{display:flex;gap:14px;justify-content:space-between;align-items:flex-start;margin-bottom:16px}.panel-head h2{margin:0;font-size:1.35rem}.panel-head p{margin:.25rem 0 0;color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.wide{grid-column:1/-1}label{display:grid;gap:5px;color:var(--muted);font-size:.82rem;font-weight:750}input,select,textarea{width:100%;border:1px solid #cfc5c0;border-radius:8px;background:#fff;color:var(--ink);padding:.62rem .7rem}textarea{min-height:76px;resize:vertical}.collection{display:grid;gap:12px}.item{border:1px solid var(--line);border-radius:13px;background:#fffdfa;padding:15px}.item-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}.item-head h3{margin:0;font-size:1.05rem;overflow-wrap:anywhere}.item-head .count{color:var(--muted);font-size:.85rem}.item-head .actions{margin-left:auto;display:flex;gap:6px}.icon{padding:.36rem .58rem;min-width:36px}.subgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.span2{grid-column:span 2}.color-field{display:grid;grid-template-columns:52px 1fr;gap:7px}.color-field input[type=color]{height:42px;padding:3px}.dates{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.chip{display:inline-flex;align-items:center;gap:6px;padding:.34rem .45rem .34rem .62rem;border:1px solid #d8cfca;border-radius:999px;background:#fff;font-size:.86rem}.chip button{border:0;padding:0 .18rem;background:transparent;color:var(--danger)}.date-add{display:flex;gap:8px;margin-top:10px;max-width:360px}.empty{margin:8px 0 0;color:var(--muted);font-style:italic}.block-row{display:grid;grid-template-columns:130px minmax(180px,1fr) auto;gap:8px;align-items:end;margin-bottom:8px}.mode-fields{grid-column:1/-1;padding-top:4px}.hint{font-size:.8rem;color:var(--muted);margin:.45rem 0 0}.validation{border-left:5px solid var(--good)}.validation.bad{border-left-color:var(--danger)}.validation.warn{border-left-color:var(--accent2)}.validation h2{margin-top:0}.validation ul{margin:.5rem 0 0;padding-left:1.3rem}.validation .warnings{color:#73510a}.output-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}.metric{padding:10px;border-radius:10px;background:var(--wash);text-align:center}.metric strong{display:block;font-size:1.35rem}.metric span{font-size:.75rem;color:var(--muted)}pre{margin:0;max-height:520px;overflow:auto;background:#201d1e;color:#f5ece9;border-radius:12px;padding:15px;font:12px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere}.help ol{padding-left:1.3rem}.help code{background:#f0eae7;padding:.1rem .28rem;border-radius:4px}.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:800px){header{display:block}.grid,.output-wrap{grid-template-columns:1fr}.subgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.status{width:100%;margin-left:0}.wide{grid-column:1/-1}}
+@media(max-width:520px){.shell{width:min(100% - 18px,1180px);padding-top:15px}.subgrid{grid-template-columns:1fr}.span2{grid-column:auto}.block-row{grid-template-columns:105px minmax(0,1fr) auto}.summary{grid-template-columns:repeat(2,1fr)}.toolbar{top:4px}}
+</style>
+</head>
+<body>
+<main class="shell">
+  <header>
+    <div>
+      <p class="eyebrow">Version 3 schema</p>
+      <h1>Schedule JSON Builder</h1>
+      <p>Create or edit the data file used by the responsive current-schedule page. Everything stays in your browser; this tool does not upload schedule data to a server.</p>
+    </div>
+  </header>
+
+  <div class="toolbar" aria-label="File actions">
+    <label class="button" for="fileInput">Upload JSON</label>
+    <input class="visually-hidden" id="fileInput" type="file" accept=".json,application/json">
+    <button id="loadPublished" type="button">Load schedule-data.json</button>
+    <button id="newFile" type="button">New blank file</button>
+    <button id="copyJson" type="button">Copy JSON</button>
+    <button class="primary" id="downloadJson" type="button">Download JSON</button>
+    <span class="status" id="status" role="status">Ready</span>
+  </div>
+
+  <section class="panel" aria-labelledby="siteHeading">
+    <div class="panel-head"><div><h2 id="siteHeading">1. Site and file information</h2><p>Titles, timezone, version information, and footer text.</p></div></div>
+    <div class="grid" id="generalFields">
+      <label>Schema version<input data-top="schemaVersion" type="number" min="3" step="1" readonly></label>
+      <label>Data version<input data-top="dataVersion" placeholder="2026-09-03.1"></label>
+      <label>School year<input data-top="schoolYear" placeholder="2026-27"></label>
+      <label>Timezone<input data-top="timezone" list="timezones" placeholder="America/Chicago"><datalist id="timezones"><option>America/Chicago</option><option>America/New_York</option><option>America/Denver</option><option>America/Los_Angeles</option><option>America/Phoenix</option><option>America/Anchorage</option><option>Pacific/Honolulu</option></datalist></label>
+      <label>School name<input data-site="schoolName" placeholder="Example School"></label>
+      <label>Page title<input data-site="title" placeholder="Example School Current Schedule"></label>
+      <label class="wide">Description<textarea data-site="description" placeholder="A short description for search engines and link previews."></textarea></label>
+      <label>Default accent color<span class="color-field"><input data-site-color type="color"><input data-site="defaultColor" placeholder="#66151c"></span></label>
+      <label>Revision note<input data-top="revisionNote" placeholder="Revised 2026/09/03."></label>
+      <label class="wide">Footer disclaimer<textarea data-site="disclaimer"></textarea></label>
+      <label class="wide">Footer contact text<input data-site="contact"></label>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="typesHeading">
+    <div class="panel-head"><div><h2 id="typesHeading">2. Day types and calendar dates</h2><p>Name each kind of day, choose its dates and color, and assign timed or all-day behavior.</p></div><button id="addDayType" type="button">Add day type</button></div>
+    <div class="collection" id="dayTypes"></div>
+  </section>
+
+  <section class="panel" aria-labelledby="schedulesHeading">
+    <div class="panel-head"><div><h2 id="schedulesHeading">3. Bell schedules</h2><p>Each block ends when the next one begins. The final block should be a terminal marker such as “End of School.”</p></div><button id="addSchedule" type="button">Add schedule</button></div>
+    <div class="collection" id="schedules"></div>
+  </section>
+
+  <section class="panel validation" id="validationPanel" aria-labelledby="validationHeading">
+    <h2 id="validationHeading">Validation</h2>
+    <div id="validationText"></div>
+  </section>
+
+  <div class="output-wrap">
+    <section class="panel" aria-labelledby="outputHeading">
+      <div class="panel-head"><div><h2 id="outputHeading">Generated JSON</h2><p>Downloads use the filename <code>schedule-data.json</code>.</p></div></div>
+      <div class="summary" id="summary"></div>
+      <pre id="jsonOutput" tabindex="0"></pre>
+    </section>
+    <section class="panel help" aria-labelledby="helpHeading">
+      <h2 id="helpHeading">How the pieces connect</h2>
+      <ol>
+        <li>A <strong>day type</strong> contains its visible label, color, and calendar dates.</li>
+        <li>Each day type selects either a reusable bell schedule or an all-day message.</li>
+        <li>A <strong>bell schedule</strong> contains ordered start times and labels. More than one day type may reuse it.</li>
+      </ol>
+      <p>Upload an existing schema-version-3 JSON file to edit it. Correct validation errors before downloading. See <a href="SCHEDULE_DATA_SCHEMA_V3.md" target="_blank">the complete schema documentation</a> for implementation details.</p>
+    </section>
+  </div>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const clone=value=>JSON.parse(JSON.stringify(value));
+const initialData={
+  schemaVersion:3,dataVersion:"",schoolYear:"",timezone:"America/Chicago",
+  site:{schoolName:"",title:"",description:"",defaultColor:"#66151c",disclaimer:"",contact:""},
+  revisionNote:"",
+  dayTypes:[{label:"Regular Day",color:"#66151c",dates:[],schedule:"regular"}],
+  schedules:{regular:{blocks:[{start:"08:00",label:"First Period"},{start:"15:00",label:"End of School"}]}}
+};
+let data=clone(initialData);
+
+function uniqueName(base,existing){let name=base,n=2;while(existing.includes(name))name=`${base}${n++}`;return name}
+function escapeHtml(value){return String(value??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function colorHex(value){
+  if(/^#[0-9a-f]{6}$/i.test(value||""))return value;
+  const canvas=document.createElement("canvas"),context=canvas.getContext("2d");
+  context.fillStyle="#000000";context.fillStyle=value||"#000000";
+  const normalized=context.fillStyle;
+  return /^#[0-9a-f]{6}$/i.test(normalized)?normalized:"#000000";
+}
+function normalizeImported(raw){
+  if(!raw||typeof raw!=="object"||Array.isArray(raw))throw new Error("The JSON root must be an object.");
+  const schedules=raw.schedules&&typeof raw.schedules==="object"&&!Array.isArray(raw.schedules)?Object.fromEntries(Object.entries(raw.schedules).map(([key,value])=>[key,{blocks:Array.isArray(value?.blocks)?value.blocks.map(block=>({start:String(block?.start??""),label:String(block?.label??"")})):[]}])):{};
+  if(Number(raw.schemaVersion)!==3)throw new Error("Only schema version 3 can be imported.");
+  return {
+    schemaVersion:3,dataVersion:String(raw.dataVersion??""),schoolYear:String(raw.schoolYear??""),timezone:String(raw.timezone??""),
+    site:{schoolName:String(raw.site?.schoolName??""),title:String(raw.site?.title??""),description:String(raw.site?.description??""),defaultColor:String(raw.site?.defaultColor??""),disclaimer:String(raw.site?.disclaimer??""),contact:String(raw.site?.contact??"")},
+    revisionNote:String(raw.revisionNote??""),
+    dayTypes:Array.isArray(raw.dayTypes)?raw.dayTypes.map(type=>{const item={label:String(type?.label??""),color:String(type?.color??""),dates:Array.isArray(type?.dates)?type.dates.map(String):[]};if(type?.allDay)item.allDay=String(type.allDay);else item.schedule=String(type?.schedule??"");return item}):[],
+    schedules
+  };
+}
+function generatedData(){
+  return {schemaVersion:3,dataVersion:data.dataVersion,schoolYear:data.schoolYear,timezone:data.timezone,site:{...data.site},revisionNote:data.revisionNote,dayTypes:data.dayTypes.map(type=>({...type,dates:[...type.dates].sort()})),schedules:clone(data.schedules)};
+}
+function fillGeneral(){
+  document.querySelectorAll("[data-top]").forEach(input=>input.value=data[input.dataset.top]??"");
+  document.querySelectorAll("[data-site]").forEach(input=>input.value=data.site[input.dataset.site]??"");
+  document.querySelector("[data-site-color]").value=colorHex(data.site.defaultColor);
+}
+function optionList(values,current){return values.map(value=>`<option value="${escapeHtml(value)}"${value===current?" selected":""}>${escapeHtml(value)}</option>`).join("")}
+function renderDayTypes(){
+  const root=$("dayTypes"),scheduleNames=Object.keys(data.schedules);
+  root.innerHTML=data.dayTypes.length?data.dayTypes.map((type,index)=>{const allDay=Object.hasOwn(type,"allDay");return `<article class="item" data-day-index="${index}">
+    <div class="item-head"><h3>${escapeHtml(type.label||`Day type ${index+1}`)}</h3><span class="count">${type.dates.length} dates</span><span class="actions"><button class="icon" data-move-day="${index}" data-direction="-1" title="Move up">↑</button><button class="icon" data-move-day="${index}" data-direction="1" title="Move down">↓</button><button class="danger icon" data-remove-day="${index}" title="Remove day type">×</button></span></div>
+    <div class="subgrid">
+      <label class="span2">Displayed label<input data-day-field="label" value="${escapeHtml(type.label)}"></label>
+      <label>Color<span class="color-field"><input data-day-color type="color" value="${colorHex(type.color)}"><input data-day-field="color" value="${escapeHtml(type.color)}"></span></label>
+      <label>Behavior<select data-day-mode><option value="timed"${allDay?"":" selected"}>Timed schedule</option><option value="allDay"${allDay?" selected":""}>All day</option></select></label>
+      <div class="mode-fields">${allDay?`<label>All-day message<input data-day-field="allDay" value="${escapeHtml(type.allDay)}" placeholder="No School"></label>`:`<label>Bell schedule<select data-day-field="schedule"><option value="">Select…</option>${optionList(scheduleNames,type.schedule)}</select></label>`}</div>
+    </div>
+    <div class="date-add"><label>Add a calendar date<input data-day-date-picker type="date"></label><button data-add-day-date="${index}" type="button">Add</button></div>
+    <div class="dates">${[...type.dates].sort().map(date=>`<span class="chip">${escapeHtml(date)}<button data-remove-day-date="${index}" data-value="${escapeHtml(date)}" aria-label="Remove ${escapeHtml(date)}">×</button></span>`).join("")}</div>
+    ${type.dates.length?"":"<p class=\"empty\">No dates selected yet.</p>"}
+  </article>`}).join(""):"<p class=\"empty\">No day types exist. Add one to connect dates with a schedule.</p>";
+}
+function renderSchedules(){
+  const root=$("schedules"),entries=Object.entries(data.schedules);
+  root.innerHTML=entries.length?entries.map(([name,schedule])=>`<article class="item" data-schedule="${escapeHtml(name)}">
+    <div class="item-head"><h3>${escapeHtml(name)}</h3><span class="count">${Array.isArray(schedule.blocks)?schedule.blocks.length:0} blocks</span><span class="actions"><button class="danger icon" data-remove-schedule="${escapeHtml(name)}" title="Remove schedule" aria-label="Remove ${escapeHtml(name)}">×</button></span></div>
+    <div class="subgrid"><label class="span2">Schedule identifier<input data-rename-schedule="${escapeHtml(name)}" value="${escapeHtml(name)}"></label></div>
+    <div class="blocks">${Array.isArray(schedule.blocks)?schedule.blocks.map((block,index)=>`<div class="block-row"><label>Start time<input data-block-time="${index}" type="time" value="${escapeHtml(block.start)}"></label><label>Block label<input data-block-label="${index}" value="${escapeHtml(block.label)}" placeholder="Period or event"></label><button class="danger icon" data-remove-block="${index}" title="Remove block" aria-label="Remove block ${index+1}">×</button></div>`).join(""):"<p class=\"empty\">Blocks must be an array.</p>"}</div>
+    <button data-add-block="${escapeHtml(name)}" type="button">Add block</button>
+    <p class="hint">Times use the school’s timezone. Keep them strictly increasing.</p>
+  </article>`).join(""):"<p class=\"empty\">No bell schedules exist. Add one for timed day types.</p>";
+}
+function realIsoDate(value){
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(value))return false;
+  const [year,month,day]=value.split("-").map(Number),date=new Date(Date.UTC(year,month-1,day));
+  return date.getUTCFullYear()===year&&date.getUTCMonth()===month-1&&date.getUTCDate()===day;
+}
+function validate(){
+  const errors=[],warnings=[];
+  if(Number(data.schemaVersion)!==3)errors.push("schemaVersion must be the number 3.");
+  if(!data.timezone)errors.push("timezone is required.");else try{new Intl.DateTimeFormat("en-US",{timeZone:data.timezone})}catch{errors.push(`Timezone “${data.timezone}” is not recognized.`)}
+  for(const field of ["schoolName","title","defaultColor"])if(!data.site[field])errors.push(`site.${field} is required.`);
+  if(data.site.defaultColor&&!CSS.supports("color",data.site.defaultColor))errors.push("site.defaultColor is not a valid CSS color.");
+  const assigned=new Map(),scheduleNames=Object.keys(data.schedules);
+  if(!data.dayTypes.length)warnings.push("No day types have been created.");
+  data.dayTypes.forEach((type,index)=>{
+    const name=type.label||`day type ${index+1}`;
+    if(!type.label)errors.push(`${name} needs a displayed label.`);
+    if(!type.color||!CSS.supports("color",type.color))errors.push(`${name} needs a valid CSS color.`);
+    if(!Array.isArray(type.dates))errors.push(`${name}.dates must be an array.`);else type.dates.forEach(date=>{
+      if(!realIsoDate(date))errors.push(`${name} contains invalid or non-ISO date “${date}”.`);
+      if(assigned.has(date))errors.push(`${date} is assigned to both ${assigned.get(date)} and ${name}.`);else assigned.set(date,name);
+    });
+    const allDay=Object.hasOwn(type,"allDay");
+    if(allDay){if(!type.allDay)errors.push(`${name} needs an all-day message.`);if(Object.hasOwn(type,"schedule"))errors.push(`${name} cannot contain both schedule and allDay.`)}
+    else if(!type.schedule||!scheduleNames.includes(type.schedule))errors.push(`${name} references a missing bell schedule.`);
+  });
+  for(const [name,schedule] of Object.entries(data.schedules)){
+    if(!Array.isArray(schedule.blocks)){errors.push(`${name}.blocks must be an array.`);continue}
+    if(schedule.blocks.length<2)errors.push(`${name} needs at least two blocks, including a terminal block.`);
+    let previous=-1;
+    schedule.blocks.forEach((block,index)=>{
+      if(!block.label)errors.push(`${name}, block ${index+1}, needs a label.`);
+      const match=/^(\d{2}):(\d{2})$/.exec(block.start);
+      if(!match||Number(match[1])>23||Number(match[2])>59)errors.push(`${name}, block ${index+1}, has an invalid start time.`);
+      else{const minutes=Number(match[1])*60+Number(match[2]);if(minutes<=previous)errors.push(`${name} start times must be strictly increasing.`);previous=minutes}
+    });
+    if(!data.dayTypes.some(type=>type.schedule===name))warnings.push(`Bell schedule “${name}” is not used by a day type.`);
+  }
+  return {errors:[...new Set(errors)],warnings:[...new Set(warnings)]};
+}
+function refreshOutput(){
+  const output=generatedData(),result=validate();
+  $("jsonOutput").textContent=JSON.stringify(output,null,2);
+  const dateCount=data.dayTypes.reduce((sum,type)=>sum+(Array.isArray(type.dates)?type.dates.length:0),0);
+  const blockCount=Object.values(data.schedules).reduce((sum,schedule)=>sum+(Array.isArray(schedule.blocks)?schedule.blocks.length:0),0);
+  $("summary").innerHTML=[[data.dayTypes.length,"Day types"],[dateCount,"Dates"],[Object.keys(data.schedules).length,"Schedules"],[blockCount,"Blocks"]].map(([number,label])=>`<div class="metric"><strong>${number}</strong><span>${label}</span></div>`).join("");
+  const panel=$("validationPanel"),text=$("validationText");panel.className=`panel validation${result.errors.length?" bad":result.warnings.length?" warn":""}`;
+  text.innerHTML=result.errors.length?`<strong>${result.errors.length} error${result.errors.length===1?"":"s"} must be corrected:</strong><ul>${result.errors.map(error=>`<li>${escapeHtml(error)}</li>`).join("")}</ul>${result.warnings.length?`<div class="warnings"><strong>${result.warnings.length} warning${result.warnings.length===1?"":"s"}:</strong><ul>${result.warnings.map(warning=>`<li>${escapeHtml(warning)}</li>`).join("")}</ul></div>`:""}`:result.warnings.length?`<strong>The JSON is valid.</strong><div class="warnings"><strong>${result.warnings.length} warning${result.warnings.length===1?"":"s"}:</strong><ul>${result.warnings.map(warning=>`<li>${escapeHtml(warning)}</li>`).join("")}</ul></div>`:"<strong>The JSON is valid and ready to download.</strong>";
+  return result;
+}
+function renderAll(){fillGeneral();renderDayTypes();renderSchedules();refreshOutput()}
+function setStatus(message,tone=""){const node=$("status");node.textContent=message;node.className=`status ${tone}`.trim()}
+
+$("generalFields").addEventListener("input",event=>{
+  const input=event.target;
+  if(input.dataset.top)data[input.dataset.top]=input.dataset.top==="schemaVersion"?Number(input.value):input.value;
+  if(input.dataset.site)data.site[input.dataset.site]=input.value;
+  if(input.hasAttribute("data-site-color")){data.site.defaultColor=input.value;document.querySelector('[data-site="defaultColor"]').value=input.value}
+  if(input.dataset.site==="defaultColor")document.querySelector("[data-site-color]").value=colorHex(input.value);
+  refreshOutput();
+});
+$("dayTypes").addEventListener("input",event=>{
+  const card=event.target.closest("[data-day-index]");if(!card)return;const type=data.dayTypes[Number(card.dataset.dayIndex)],input=event.target;
+  if(input.dataset.dayField)type[input.dataset.dayField]=input.value;
+  if(input.hasAttribute("data-day-color")){type.color=input.value;card.querySelector('[data-day-field="color"]').value=input.value}
+  if(input.dataset.dayField==="color")card.querySelector("[data-day-color]").value=colorHex(input.value);
+  card.querySelector("h3").textContent=type.label||"Day type";refreshOutput();
+});
+$("dayTypes").addEventListener("change",event=>{
+  const card=event.target.closest("[data-day-index]");if(!card)return;const type=data.dayTypes[Number(card.dataset.dayIndex)];
+  if(event.target.hasAttribute("data-day-mode")){if(event.target.value==="allDay"){delete type.schedule;type.allDay=type.label||"All Day"}else{delete type.allDay;type.schedule=Object.keys(data.schedules)[0]||""}renderDayTypes();refreshOutput()}
+});
+$("dayTypes").addEventListener("click",event=>{
+  const button=event.target.closest("button");if(!button)return;const card=button.closest("[data-day-index]");
+  if(button.dataset.addDayDate!==undefined){const index=Number(button.dataset.addDayDate),picker=card.querySelector("[data-day-date-picker]"),value=picker.value;if(value&&!data.dayTypes[index].dates.includes(value)){data.dayTypes[index].dates.push(value);renderDayTypes();refreshOutput()}}
+  if(button.dataset.removeDayDate!==undefined){const index=Number(button.dataset.removeDayDate),dates=data.dayTypes[index].dates,dateIndex=dates.indexOf(button.dataset.value);if(dateIndex>=0)dates.splice(dateIndex,1);renderDayTypes();refreshOutput()}
+  if(button.dataset.removeDay!==undefined){data.dayTypes.splice(Number(button.dataset.removeDay),1);renderDayTypes();refreshOutput()}
+  if(button.dataset.moveDay!==undefined){const from=Number(button.dataset.moveDay),to=from+Number(button.dataset.direction);if(to>=0&&to<data.dayTypes.length){[data.dayTypes[from],data.dayTypes[to]]=[data.dayTypes[to],data.dayTypes[from]];renderDayTypes();refreshOutput()}}
+});
+$("schedules").addEventListener("input",event=>{
+  const card=event.target.closest("[data-schedule]");if(!card)return;const blocks=data.schedules[card.dataset.schedule].blocks,index=Number(event.target.dataset.blockTime??event.target.dataset.blockLabel);
+  if(event.target.dataset.blockTime!==undefined)blocks[index].start=event.target.value;
+  if(event.target.dataset.blockLabel!==undefined)blocks[index].label=event.target.value;
+  refreshOutput();
+});
+$("schedules").addEventListener("click",event=>{
+  const button=event.target.closest("button");if(!button)return;const card=button.closest("[data-schedule]"),name=card?.dataset.schedule;
+  if(button.dataset.addBlock){data.schedules[button.dataset.addBlock].blocks.push({start:"",label:""});renderSchedules();refreshOutput()}
+  if(button.dataset.removeBlock!==undefined){data.schedules[name].blocks.splice(Number(button.dataset.removeBlock),1);renderSchedules();refreshOutput()}
+  if(button.dataset.removeSchedule){if(confirm(`Remove bell schedule “${name}”? Timed day types that use it will need another selection.`)){delete data.schedules[name];renderSchedules();renderDayTypes();refreshOutput()}}
+});
+$("schedules").addEventListener("change",event=>{
+  const input=event.target;if(!input.dataset.renameSchedule)return;const oldName=input.dataset.renameSchedule,newName=input.value.trim();
+  if(!newName||newName===oldName){renderSchedules();return}if(Object.hasOwn(data.schedules,newName)){setStatus(`Schedule “${newName}” already exists.`,"bad");renderSchedules();return}
+  const rebuilt={};for(const [name,schedule] of Object.entries(data.schedules))rebuilt[name===oldName?newName:name]=schedule;data.schedules=rebuilt;data.dayTypes.forEach(type=>{if(type.schedule===oldName)type.schedule=newName});renderSchedules();renderDayTypes();refreshOutput();setStatus("Schedule renamed.","good");
+});
+$("addSchedule").addEventListener("click",()=>{const name=uniqueName("newSchedule",Object.keys(data.schedules));data.schedules[name]={blocks:[{start:"08:00",label:"First Block"},{start:"15:00",label:"End of School"}]};renderSchedules();renderDayTypes();refreshOutput()});
+$("addDayType").addEventListener("click",()=>{data.dayTypes.push({label:"New Day Type",color:data.site.defaultColor||"#66151c",dates:[],schedule:Object.keys(data.schedules)[0]||""});renderDayTypes();refreshOutput()});
+$("fileInput").addEventListener("change",async event=>{const file=event.target.files[0];if(!file)return;try{data=normalizeImported(JSON.parse(await file.text()));renderAll();const result=validate();setStatus(result.errors.length?`Loaded with ${result.errors.length} validation error(s).`:`Loaded ${file.name}.`,result.errors.length?"bad":"good")}catch(error){setStatus(`Could not load file: ${error.message}`,"bad")}finally{event.target.value=""}});
+$("loadPublished").addEventListener("click",async()=>{try{const response=await fetch("./schedule-data.json",{cache:"no-cache"});if(!response.ok)throw new Error(`HTTP ${response.status}`);data=normalizeImported(await response.json());renderAll();setStatus("Loaded schedule-data.json.","good")}catch(error){setStatus(`Could not load schedule-data.json: ${error.message}`,"bad")}});
+$("newFile").addEventListener("click",()=>{if(confirm("Start a new blank schedule? Unsaved edits in this builder will be lost.")){data=clone(initialData);renderAll();setStatus("Started a new file.","good")}});
+$("copyJson").addEventListener("click",async()=>{const result=validate();if(result.errors.length){setStatus("Correct validation errors before copying.","bad");return}try{await navigator.clipboard.writeText(JSON.stringify(generatedData(),null,2)+"\n");setStatus("JSON copied to the clipboard.","good")}catch{setStatus("Clipboard access was unavailable. Select the generated JSON manually.","bad")}});
+$("downloadJson").addEventListener("click",()=>{const result=validate();if(result.errors.length){setStatus("Correct validation errors before downloading.","bad");$("validationPanel").scrollIntoView({behavior:"smooth"});return}const blob=new Blob([JSON.stringify(generatedData(),null,2)+"\n"],{type:"application/json"}),url=URL.createObjectURL(blob),link=document.createElement("a");link.href=url;link.download="schedule-data.json";document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);setStatus("Downloaded schedule-data.json.","good")});
+
+renderAll();
+</script>
+</body>
+</html>
