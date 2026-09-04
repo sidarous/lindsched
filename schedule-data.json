@@ -10,7 +10,7 @@
     "defaultColor": "#66151c",
     "contact": "Questions or corrections? Please contact Mr. Sidarous."
   },
-  "revisionNote": "Revised 2026/09/03 for schema version 3.",
+  "revisionNote": "Revised 2026/09/04 to reimplment 5 min refresh.",
   "dayTypes": [
     {
       "label": "Gold 1–4 Day",
