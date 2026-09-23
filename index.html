@@ -104,9 +104,29 @@ function duration(seconds){
 }
 function renderSchedule(info,active=-1){
   const list=$('schedule');
-  if(!info){list.innerHTML='<li>No schedule is listed for this date.</li>';return}
-  if(info.allDay){list.innerHTML=`<li class="active"><span>All day</span><span>${info.allDay}</span></li>`;return}
-  list.innerHTML=info.blocks.slice(0,-1).map(([start,name],i)=>`<li${i===active?' class="active"':''}><span class="time">${timeLabel(start)}–${timeLabel(info.blocks[i+1][0])}</span><span>${name}</span></li>`).join('')+`<li><span class="time">${timeLabel(info.blocks.at(-1)[0])}</span><span>${info.blocks.at(-1)[1]}</span></li>`;
+  list.replaceChildren();
+  if(!info){
+    const row=document.createElement('li');
+    row.textContent='No schedule is listed for this date.';
+    list.append(row);
+    return;
+  }
+  function appendRow(time,label,isActive,isTimed){
+    const row=document.createElement('li');
+    if(isActive)row.className='active';
+    const timeSpan=document.createElement('span'),labelSpan=document.createElement('span');
+    if(isTimed)timeSpan.className='time';
+    timeSpan.textContent=time;
+    labelSpan.textContent=label;
+    row.append(timeSpan,labelSpan);
+    list.append(row);
+  }
+  if(info.allDay){appendRow('All day',info.allDay,true,false);return}
+  info.blocks.forEach(([start,name],i)=>{
+    const hasNext=i<info.blocks.length-1;
+    const time=hasNext?`${timeLabel(start)}–${timeLabel(info.blocks[i+1][0])}`:timeLabel(start);
+    appendRow(time,name,hasNext&&i===active,true);
+  });
 }
 function update(){
   const now=new Date(),schoolTime=zonedNow(now),key=schoolTime.key,minute=schoolTime.minute,info=findSchedule(key);
@@ -182,8 +202,7 @@ function applySite(data){
 async function loadCalendar(){
   try{
     const requestedData=new URLSearchParams(location.search).get('data');
-    const isLocal=location.hostname==='localhost'||location.hostname==='127.0.0.1';
-    const dataFile=isLocal&&requestedData&&/^[A-Za-z0-9._-]+\.json$/.test(requestedData)?requestedData:'schedule-data.json';
+    const dataFile=requestedData&&/^[A-Za-z0-9._-]+\.json$/.test(requestedData)?requestedData:'schedule-data.json';
     const response=await fetch(`./${dataFile}`,{cache:'no-cache'});
     if(!response.ok)throw new Error(`Schedule request failed: ${response.status}`);
     calendarData=validateCalendar(await response.json());

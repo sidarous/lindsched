@@ -27,6 +27,8 @@ The project is a static GitHub Pages site with no backend, framework, build step
 
 The app loads the JSON file, uses its configured school timezone to select the day, and compares the current time with the schedule's start times to calculate the current block, upcoming block, and countdown.
 
+To load another schedule on either the published site or a local web server, add `?data=another-schedule.json` to the page URL, for example `https://mark.sidarous.com/lindsched/?data=another-schedule.json`. The file must be published in the same folder as `index.html` and follow the version-3 data schema. Filenames may contain only letters, numbers, periods, underscores, and hyphens, and must end in `.json`; paths and external URLs are not accepted. An omitted or invalid argument uses `schedule-data.json`. A valid filename whose file is missing or invalid displays the schedule-loading error.
+
 [`schedule-builder.html`](./schedule-builder.html) provides a visual editor that can load an existing version-3 JSON file, edit calendar dates and schedules, validate the result, and download a replacement `schedule-data.json` file. It is linked from the schedule page footer as **Build or edit a schedule**.
 
 Two earlier self-contained versions remain in the repository for comparison and archival purposes:
