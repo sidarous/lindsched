@@ -9,7 +9,7 @@ Lindblom Current Schedule is a simple web app that makes Lindblom's rotating dai
 
 ## Use the app
 
-Open **[Lindblom Current Schedule](https://mark.sidarous.com/lindsched/)** in any modern web browser. It also works on phones, although the current layout is best viewed on a larger screen.
+Open **[Lindblom Current Schedule](https://mark.sidarous.net/lindsched/)** in any modern web browser. It also works on phones, although the current layout is best viewed on a larger screen.
 
 ## Features
 
