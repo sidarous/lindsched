@@ -59,6 +59,6 @@ The complete data contract is documented in [`SCHEDULE_DATA_SCHEMA_V3.md`](./SCH
 
 ## Feedback and corrections
 
-Questions, corrections, feature ideas, and design suggestions are welcome. Please contact Mr. Sidarous or [open an issue](https://github.com/sidarous/lindsched/issues).
+Questions, corrections, feature ideas, and design suggestions are welcome. Please contact Mr. Sidarous via his email address or [open an issue](https://github.com/sidarous/lindsched/issues).
 
 Improvements may take time, but reports of incorrect dates or schedule times are especially helpful.
