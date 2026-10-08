@@ -62,4 +62,3 @@ The complete data contract is documented in [`SCHEDULE_DATA_SCHEMA_V3.md`](./SCH
 Questions, corrections, feature ideas, and design suggestions are welcome. Please contact Mr. Sidarous via his email address or [open an issue](https://github.com/sidarous/lindsched/issues).
 
 Improvements may take time, but reports of incorrect dates or schedule times are especially helpful.
-Last updated October 6th, 2026
